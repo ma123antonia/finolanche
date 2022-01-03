@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<title>Cardápio</title>
+</head>
+<body>
+
+	<div th:replace="~{base/menu :: menu}"></div>
+
+	<div class="container">
+
+
+		<h1>Cardápio</h1>
+
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Nome do Prato</th>
+					<th>Descrição</th>
+					<th>Preço</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="p : ${pratos}">
+
+					<td th:text="${p.id}"></td>
+					<td th:text="${p.nome}"></td>
+					<td th:text="${p.descricao}"></td>
+					<td th:text="${p.preco}"></td>
+
+					<td><a th:href="@{/site/{id}(id=${p.id})}"><i
+							class="material-icons">description</i></a> <a sec:authorize="hasRole('USU_ADMINISTRADOR')"
+						th:href="@{/site/{id}/selecionar(id=${p.id})}"><i
+							class="material-icons">edit</i></a> <a sec:authorize="hasRole('USU_ADMINISTRADOR')"
+						th:href="@{/site/{id}/remover(id=${p.id})}"><i
+							class="material-icons">delete</i></a></td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	
+	<br />
+	<br />
+	<div th:replace="~{base/menu :: rodape}"></div>
+</body>
+</html>

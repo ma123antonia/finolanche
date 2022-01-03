@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<title>Fazendo Pedido</title>
+</head>
+<body>
+
+	<div th:replace="~{base/menu :: menu}"></div>
+
+	<div class="container">
+
+
+		<h1>Prato</h1>
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Cardápio</span>
+						<p>
+							<strong>Id: </strong><span th:text="${prato.id}"></span>
+						</p>
+						<p>
+							<strong>Nome do Prato: </strong><span th:text="${prato.nome}"></span>
+						</p>
+						<p>
+							<strong>Descrição: </strong><span
+								th:text="${prato.descricao}"></span>
+						</p>
+						<p>
+							<strong>Preço: </strong><span th:text="${prato.preco}"></span>
+						</p>
+			
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Realizar Pedido</span>
+						<p th:if="${mensagem}" th:text="${mensagem}"></p>
+						<form
+							th:action="@{/site/{idPrato}(idPrato=${prato.id})}"
+							method="post" th:object="${pedido}">
+							<div>
+								<input type="hidden" th:field="*{id}" readonly="readonLy">
+							</div>
+							<div>
+								<label>Nome do Cliente:</label> <input type="text"
+									th:field="*{nomeCliente}">
+								<p th:errors="*{nomeCliente}"></p>
+							</div>
+							<div>
+								<label>Endereço:</label> <input type="text"
+									th:field="*{endereco}">
+								<p th:errors="*{endereco}"></p>
+							</div>
+
+							<div>
+								<label>Quantidade:</label> <input type="text"
+									th:field="*{qtd}">
+								<p th:errors="*{qtd}"></p>
+							</div>
+
+							<div>
+								<button type="submit" class="btn">Salvar</button>
+								<button type="reset" class="btn">Limpar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col s12">
+				<div class="card">
+					<div class="card-content">
+						<span class="card-title">Pedidos</span>
+						<table class="highlight">
+							<thead>
+								<tr>
+									<th>Id</th>
+									<th>Nome do Cliente</th>
+									<th>Endereço</th>
+									<th>Quantidade</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="p : ${pedidos}">
+									<td th:text="${p.id}"></td>
+									<td th:text="${p.nomeCliente}"></td>
+									<td th:text="${p.endereco}"></td>
+									<td th:text="${p.qtd}"></td>
+
+									<td><a sec:authorize="hasRole('USU_ADMINISTRADOR')"
+										th:href="@{/site/{idPrato}/pedidos/{idPedido}/selecionar(idPrato=${prato.id}, idPedido=${p.id})}"><i
+											class="material-icons">edit</i></a> <a sec:authorize="hasRole('USU_ADMINISTRADOR')"
+										th:href="@{/site/{idPrato}/pedidos/{id}/remover(id=${p.id}, idPrato=${p.prato.id})}"><i
+											class="material-icons">delete</i></a></td>
+								</tr>
+
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<br />
+	<br />
+	<div th:replace="~{base/menu :: rodape}"></div>
+</body>
+</html>

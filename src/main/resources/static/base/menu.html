@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<title>Fino Lanche</title>
+
+</head>
+<body>
+
+	<a href="#" th:href="@{/logout}">Sair</a>
+
+	<nav class="light-blue lighten-1" th:fragment="menu">
+		<div class="nav-wrapper container">
+			<a href="/" class="brand-logo">Fino Lanche</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="/">Home</a></li>
+				<li sec:authorize="hasRole('USU_LANCHONETE')"><a
+					href="/site/formPrato">Adicionar Prato</a></li>
+				<li sec:authorize="hasRole('USU_CADASTRADO')"><a
+					href="/site/listarPratos">Cardápio</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="#"
+					th:href="@{/login}">Login</a></li>
+				<li sec:authorize="!isAuthenticated()"><a href="#"
+					th:href="@{/cadastro}">Cadastrar</a></li>
+
+				<li sec:authorize="isAuthenticated()">
+					<form action="/logout" method="post">
+						<button class="waves-effect waves-light btn-tiny" type="submit">Sair
+
+						</button>
+
+						<input type="hidden" th:name="${_csrf.parameterName}"
+							th:value="${_csrf.token}" />
+					</form>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+	<nav th:fragment="rodape">
+
+		<footer id="rodape" class="light-blue lighten-1">
+			<div class="container">
+				<p>&copy;Maria Antônia</p>
+			</div>
+
+		</footer>
+	</nav>
+
+
+</body>
+</html>

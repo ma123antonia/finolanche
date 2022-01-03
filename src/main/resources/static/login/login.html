@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!--Import Google Icon Font-->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+	media="screen,projection">
+
+<!--Let browser know website is optimized for mobile-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<title>Tela de Login</title>
+</head>
+<body>
+
+	<div th:replace="~{base/menu :: menu}"></div>
+
+	<div class="container">
+
+		<h1>Faça seu login</h1>
+<p th:if="${mensagem}" th:text="${mensagem}"></p>
+		<div th:if="${param.logout}" class="row">
+			<div class="col-4 center">
+				<p>Até logo!</p>
+			</div>
+		</div>
+		<div id="login">
+			<form action="" method="post">
+				<div class="row">
+					<div class="col-4 center">
+						<i class="medium material-icons">person_pin</i><input type="text" placeholder="E-mail" name="username">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-4 center">
+						<i class="medium material-icons">lock_outline</i> <input type="password" placeholder="Senha" name="password">
+					</div>
+				</div>
+
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" />
+
+				<div class="row">
+					<div class="col-4 center">
+						<button class="btn" type="submit">Enviar</button>
+						<button class="btn" type="reset">Limpar</button>
+					</div>
+				</div>
+
+			</form>
+		</div>
+
+	</div>
+	<div th:replace="~{base/menu :: rodape}"></div>
+</body>
+</html>
